@@ -1,37 +1,58 @@
-# Privacy-Preserving ML Toolkit (`privacy-preserving-ml`)
+<div align="center">
 
-Applied privacy and cryptography toolkit for ML systems, including **homomorphic encryption**, **trusted execution environments (TEE)**, **hybrid HE+TEE protocols**, **zero-knowledge verification**, and **encrypted gradient boosting**.
+# 🔐 Privacy-Preserving ML
 
-## Why This Repository
+### Homomorphic Encryption • TEE • ZKP • Commitments • Encrypted GBDT
 
-Production AI security requires layered privacy controls and verifiable computation. `privacy-preserving-ml` provides practical building blocks and experiment runners across multiple cryptographic approaches.
+[![Python](https://img.shields.io/badge/Python-3.12+-blue.svg)](https://www.python.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=flat&logo=pytorch)](https://pytorch.org/)
+[![TenSEAL](https://img.shields.io/badge/TenSEAL-HE-5C2D91?style=flat)](https://github.com/OpenMined/TenSEAL)
 
-## Core Features
+[Overview](#-overview) • [About](#-about) • [Topics](#-topics) • [Quick Start](#-quick-start) • [Experiments](#-experiments)
 
-- HE modules (CKKS/BFV surfaces and benchmark hooks)
-- TEE simulation and overhead modeling
-- Hybrid protocol surfaces for HE+TEE execution
-- ZKP prover/verifier and commitment verification modules
-- Robust verification (Krum, median, trimmed mean variants)
-- Encrypted GBDT training/secure split surfaces
-- Experiment runners in `src/experiments`
+---
 
-## Project Structure
+Privacy and verification toolkit for ML systems combining **cryptography**, **trusted execution**, and **verifiable federated workflows**.
 
-- `src/encryption/`: HE, TEE, and hybrid protocol modules
-- `src/verification/`: ZKP, commitments, robust verification
-- `src/models/encrypted_gbdt/`: encrypted tree-learning layers
-- `src/experiments/`: runnable privacy/verification experiment entrypoints
-- `src/core/`: errors, logging, types, validation, security utilities
+</div>
 
-## Quick Start
+---
+
+## 🎯 Overview
+
+`privacy-preserving-ml` covers major privacy primitives:
+
+- Homomorphic encryption (CKKS/BFV)
+- TEE simulation and hybrid HE+TEE protocols
+- ZK proof and commitment verification flows
+- Robust federated verification and encrypted GBDT
+
+## 📌 About
+
+- Centralized repo for practical privacy-preserving ML components
+- Built for experimentation with deployment-oriented module boundaries
+- Includes benchmark and verification experiment runners
+
+## 🏷️ Topics
+
+`privacy-preserving-ml` `homomorphic-encryption` `tee` `zk-snark` `commitment-schemes` `encrypted-ml` `federated-learning` `cryptography`
+
+## 🧩 Architecture
+
+- `src/encryption/`: HE/TEE/hybrid protocol modules
+- `src/verification/`: zkp, commitments, robust checks
+- `src/models/encrypted_gbdt/`: encrypted tree-learning
+- `src/experiments/`: runnable privacy and verification scripts
+- `src/core/`: shared runtime and security utilities
+
+## ⚡ Quick Start
 
 ```bash
 pip install -r requirements.txt
 pytest -q tests/test_public_surfaces.py
 ```
 
-## Experiment Runners
+## 🧪 Experiments
 
 - `src/experiments/run_he_benchmark.py`
 - `src/experiments/run_tee_benchmark.py`
@@ -41,6 +62,8 @@ pytest -q tests/test_public_surfaces.py
 - `src/experiments/run_robust_fl.py`
 - `src/experiments/run_encrypted_gbdt.py`
 
-## SEO Keywords
+## 🛠️ Tech Stack
 
-privacy preserving machine learning, homomorphic encryption ml, tee machine learning, zk snark verification, commitment schemes federated learning, encrypted gbdt, secure ai model training
+**Crypto:** TenSEAL-style HE flows, commitment and proof systems  
+**ML:** PyTorch + secure training components  
+**Verification:** robust aggregation and proof validation modules
