@@ -1,16 +1,46 @@
-# privacy-preserving-ml
+# Privacy-Preserving ML Toolkit (`privacy-preserving-ml`)
 
-Privacy and cryptography toolkit for phishing-oriented ML workloads. This repo consolidates homomorphic encryption, TEE simulation, hybrid HE+TEE flows, verifiable learning primitives, robust aggregation, and encrypted GBDT building blocks.
+Applied privacy and cryptography toolkit for ML systems, including **homomorphic encryption**, **trusted execution environments (TEE)**, **hybrid HE+TEE protocols**, **zero-knowledge verification**, and **encrypted gradient boosting**.
 
-## Layout
+## Why This Repository
 
-- `src/encryption/`: HE, TEE, and hybrid protocol surfaces
-- `src/verification/`: ZKP, commitment, and robust verification modules
-- `src/models/encrypted_gbdt/`: encrypted tree-learning helpers
-- `src/core/`: embedded shared utilities
-- `tests/`: lightweight public-surface smoke test plus preserved legacy suites
+Production AI security requires layered privacy controls and verifiable computation. `privacy-preserving-ml` provides practical building blocks and experiment runners across multiple cryptographic approaches.
 
-## Notes
+## Core Features
 
-- Original project trees are preserved under nested `legacy/` namespaces or root compatibility packages such as `he_ml/` and `tee_ml/`.
-- The top-level public modules are thin, dependency-light facades meant to provide a stable structure for the split repo.
+- HE modules (CKKS/BFV surfaces and benchmark hooks)
+- TEE simulation and overhead modeling
+- Hybrid protocol surfaces for HE+TEE execution
+- ZKP prover/verifier and commitment verification modules
+- Robust verification (Krum, median, trimmed mean variants)
+- Encrypted GBDT training/secure split surfaces
+- Experiment runners in `src/experiments`
+
+## Project Structure
+
+- `src/encryption/`: HE, TEE, and hybrid protocol modules
+- `src/verification/`: ZKP, commitments, robust verification
+- `src/models/encrypted_gbdt/`: encrypted tree-learning layers
+- `src/experiments/`: runnable privacy/verification experiment entrypoints
+- `src/core/`: errors, logging, types, validation, security utilities
+
+## Quick Start
+
+```bash
+pip install -r requirements.txt
+pytest -q tests/test_public_surfaces.py
+```
+
+## Experiment Runners
+
+- `src/experiments/run_he_benchmark.py`
+- `src/experiments/run_tee_benchmark.py`
+- `src/experiments/run_hybrid_benchmark.py`
+- `src/experiments/run_zkp_verification.py`
+- `src/experiments/run_commitment_fl.py`
+- `src/experiments/run_robust_fl.py`
+- `src/experiments/run_encrypted_gbdt.py`
+
+## SEO Keywords
+
+privacy preserving machine learning, homomorphic encryption ml, tee machine learning, zk snark verification, commitment schemes federated learning, encrypted gbdt, secure ai model training
