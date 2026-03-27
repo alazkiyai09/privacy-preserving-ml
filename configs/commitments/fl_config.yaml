@@ -1,0 +1,55 @@
+# Federated Learning Configuration
+
+federated_learning:
+  # Client configuration
+  num_clients: 10
+  num_rounds: 10
+  local_epochs: 5
+  batch_size: 32
+
+  # Learning rate
+  learning_rate: 0.01
+  learning_rate_decay: 0.995
+  momentum: 0.9
+
+  # Client selection (FedAvg)
+  min_fit_clients: 8
+  min_evaluate_clients: 8
+  min_available_clients: 8
+  fraction_fit: 0.8
+  fraction_evaluate: 0.8
+
+  # Early stopping
+  early_stopping: false
+  patience: 3
+
+# Model configuration
+model:
+  type: "PhishingClassifier"
+  input_size: 1000  # Will be determined from data
+  hidden_sizes: [512, 256, 128]
+  num_classes: 2
+  dropout: 0.3
+
+# Data configuration
+data:
+  dataset: "phishing"
+  num_samples_per_client: 1000
+  test_split: 0.2
+  validation_split: 0.1
+  iid: true  # True for IID, False for non-IID
+
+# Evaluation
+evaluation:
+  metrics: ["accuracy", "precision", "recall", "f1"]
+  eval_every_round: true
+  save_model: true
+  save_checkpoints: true
+
+# Logging
+logging:
+  level: "INFO"
+  log_to_file: true
+  log_dir: "logs"
+  tensorboard: false
+  wandb: false

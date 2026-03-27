@@ -1,0 +1,93 @@
+# Zero-Knowledge Proof System Configuration
+
+# Security parameters
+security:
+  # Security parameter (bits)
+  lambda_bits: 128
+
+  # Elliptic curve parameters
+  curve:
+    name: "curve25519"
+    field_size: 255
+    order: "57896044618658097711785492504343953926634992332820282019728792003956564819949"  # 2^252 + 27742317777372353535851937790883648493
+
+  # Hash function for commitments
+  hash_function: "sha256"
+
+# Pedersen commitment parameters
+pedersen_commitment:
+  # Number of generators to use
+  num_generators: 2
+
+  # Generator values (hex encoded, will be generated if not specified)
+  # In production, these should be from a trusted setup ceremony
+  generator_g: null
+  generator_h: null
+
+# Schnorr protocol parameters
+schnorr:
+  # Challenge size (bytes)
+  challenge_size: 32
+
+  # Response size (bytes)
+  response_size: 32
+
+# Range proof parameters
+range_proof:
+  # Bit length for range
+  bit_length: 64
+
+  # Maximum range value (2^bit_length)
+  max_value: 18446744073709551616
+
+# ZK-SNARK parameters
+snark:
+  # Proof system to use: groth16, plonk, bulletproofs
+  default_system: "groth16"
+
+  # Circuit optimization level: 0=none, 1=medium, 2=aggressive
+  optimization_level: 2
+
+  # Trusted setup
+  trusted_setup:
+    # Participating parties in setup ceremony
+    num_participants: 100
+
+    # Verification hash of setup ceremony
+    verification_hash: null
+
+# FL-specific parameters
+federated_learning:
+  # Gradient bound (L2 norm)
+  gradient_bound: 1.0
+
+  # Gradient dimensions
+  gradient_size: 100
+
+  # Proof batch size (aggregate multiple proofs)
+  batch_size: 10
+
+  # Proof validity period (seconds)
+  proof_ttl: 3600
+
+# Performance parameters
+performance:
+  # Number of threads for proof generation
+  num_threads: 4
+
+  # Memory limit (MB)
+  memory_limit: 4096
+
+  # Enable GPU acceleration (if available)
+  gpu_enabled: false
+
+# Benchmarking parameters
+benchmarks:
+  # Number of trials for each benchmark
+  num_trials: 100
+
+  # Warm-up iterations
+  warmup_iterations: 10
+
+  # Output directory
+  output_dir: "benchmarks/results"

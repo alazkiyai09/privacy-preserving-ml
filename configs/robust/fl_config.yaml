@@ -1,0 +1,143 @@
+# Robust Verifiable Federated Learning Configuration
+# For Phishing Detection with Multi-Tier Defense
+
+# Federated Learning Parameters
+fl:
+  num_clients: 10              # Total number of clients
+  num_rounds: 20               # Number of training rounds
+  fraction_fit: 0.8            # Fraction of clients to train each round
+  fraction_evaluate: 0.8       # Fraction of clients to evaluate each round
+  local_epochs: 5              # Local training epochs per client
+  batch_size: 32               # Batch size for local training
+  learning_rate: 0.01          # Learning rate
+  momentum: 0.9                # SGD momentum
+
+# Model Configuration
+model:
+  input_size: 20               # Number of features (URL features, email features, etc.)
+  hidden_sizes: [64, 32]       # Hidden layer sizes
+  num_classes: 2               # Binary classification: 0=legitimate, 1=phishing
+  dropout_rate: 0.2            # Dropout rate for regularization
+
+# Zero-Knowledge Proof Configuration
+zk:
+  enable_proofs: true          # Enable ZK proof verification
+  gradient_bound: 1.0          # Maximum allowed gradient norm (L2)
+  min_samples: 100             # Minimum samples required for participation proof
+  proof_timeout: 60            # Proof generation timeout (seconds)
+
+  # Proof types to generate/verify
+  proof_types:
+    gradient_norm: true        # Prove gradient norm ≤ bound
+    participation: true        # Prove trained on ≥ min_samples
+    training_correctness: true # Prove training was executed correctly
+
+  # ZK-SNARK parameters (if using SNARKs)
+  snark:
+    scheme: "groth16"          # SNARK scheme: groth16, plonk, etc.
+    setup_file: "setup.keys"   # Path to trusted setup file
+
+# Byzantine-Robust Aggregation
+byzantine:
+  enable: true                 # Enable Byzantine-robust aggregation
+  method: "krum"               # Method: krum, multi_krum, trimmed_mean
+  num_malicious: 2             # Upper bound on number of malicious clients (f)
+  krum_m: 5                    # Number of clients to average in Multi-Krum
+  trim_ratio: 0.2              # Ratio to trim from each end (Trimmed Mean)
+
+# Anomaly Detection
+anomaly_detection:
+  enable: true                 # Enable anomaly detection
+  threshold: 2.5               # Z-score threshold for anomaly detection
+  methods:
+    - "zscore"                 # Z-score based detection
+    - "clustering"             # DBSCAN clustering based detection
+  voting: "majority"           # voting strategy: majority, unanimous
+  clustering:
+    eps: 0.5                   # DBSCAN eps parameter
+    min_samples: 3             # DBSCAN min_samples parameter
+
+# Reputation System
+reputation:
+  enable: true                 # Enable reputation system
+  min_reputation: 0.3          # Minimum reputation to participate
+  initial_score: 0.5           # Initial reputation score for new clients
+  reward_factor: 0.05          # Reward for good behavior
+  penalty_factor: 0.1          # Penalty for bad behavior
+  decay_rate: 0.01             # Reputation decay per round
+
+  # Ban thresholds
+  ban_threshold: 0.1           # Permanently ban if reputation falls below this
+  ban_after_rounds: 3          # Ban after N consecutive failures
+
+# Attack Configuration (for experiments)
+attacks:
+  # Label Flip Attack
+  label_flip:
+    enabled: false             # Enable label flip attack (for experiments)
+    flip_ratio: 0.2            # Ratio of labels to flip
+    flip_strategy: "targeted"  # Strategy: random, targeted, all_phishing
+    target_class: 0            # Target class for targeted flip
+
+  # Backdoor Attack
+  backdoor:
+    enabled: false             # Enable backdoor attack
+    trigger_type: "url_pattern" # Trigger type: url_pattern, bank_name, semantic
+    trigger_pattern: "http://secure-login"  # URL trigger pattern
+    target_bank: "Bank of America"  # Bank name trigger
+    poison_ratio: 0.1          # Ratio of samples to poison
+    target_label: 0            # Target label when trigger present
+
+  # Model Poisoning Attack
+  model_poisoning:
+    enabled: false             # Enable model poisoning
+    attack_type: "scaling"     # Attack type: scaling, sign_flip, isotropic
+    scaling_factor: 10.0       # Scaling factor for scaling attack
+    noise_std: 5.0             # Noise std for isotropic attack
+
+  # Evasion Attack
+  evasion:
+    enabled: false             # Enable evasion attack
+    method: "PGD"              # Method: PGD, FGSM
+    epsilon: 0.1               # Perturbation budget
+    num_steps: 20              # Number of PGD steps
+    step_size: 0.01            # Step size for PGD
+
+  # Adaptive Attacker
+  adaptive:
+    enabled: false             # Enable adaptive attacker
+    knows_zk_bound: true       # Attacker knows ZK bound
+    knows_byzantine: true      # Attacker knows Byzantine method
+    knows_reputation: true     # Attacker knows about reputation system
+    build_reputation_rounds: 5 # Number of rounds to build reputation before attacking
+
+# Experiment Configuration
+experiments:
+  num_runs: 5                  # Number of runs for statistical significance
+  seed: 42                     # Random seed for reproducibility
+  save_results: true           # Save experiment results
+  results_dir: "results"       # Directory to save results
+
+  # Metrics to compute
+  metrics:
+    - accuracy
+    - precision
+    - recall
+    - f1_score
+    - false_positive_rate
+    - false_negative_rate
+    - attack_success_rate
+    - defense_overhead
+
+# Logging
+logging:
+  level: "INFO"                # Log level: DEBUG, INFO, WARNING, ERROR
+  log_file: "fl_training.log"  # Log file path
+  tensorboard: true            # Enable TensorBoard logging
+  tensorboard_dir: "runs"      # TensorBoard log directory
+
+# Hardware
+hardware:
+  device: "cpu"                # Device: cpu, cuda, mps
+  num_workers: 4               # Number of data loading workers
+  pin_memory: false            # Pin memory for faster GPU transfer

@@ -1,0 +1,69 @@
+# Security Configuration for Verifiable FL
+
+proofs:
+  # Gradient norm bound
+  gradient_bound: 1.0
+  max_gradient_norm: 10.0
+
+  # Minimum participation
+  min_samples: 100
+  min_epochs: 1
+
+  # Proof system settings
+  proof_system: "groth16"  # Options: groth16, plonk, bulletproofs
+  field_prime: 101  # For demonstration (use large prime in production)
+
+# Verification settings
+verification:
+  # Verify all proofs or fail fast
+  verify_all_proofs: true
+  fail_fast: false
+
+  # Exclude clients with invalid proofs
+  exclude_on_failure: true
+  ban_malicious_clients: false
+  ban_duration: 5  # rounds
+
+  # Minimum verified clients for aggregation
+  min_verified_clients: 5
+
+  # Batch verification for scalability
+  batch_verification: true
+  batch_size: 10
+
+# Logging security events
+security_logging:
+  log_verification_failures: true
+  log_successful_verifications: false
+  log_excluded_clients: true
+  log_attack_attempts: true
+
+  # Log file
+  security_log_file: "logs/security.log"
+  audit_log_file: "logs/audit.log"
+
+# Attack simulation
+attack_simulation:
+  enabled: false
+  attack_types:
+    - name: "gradient_scaling"
+      strength: 10.0
+      probability: 0.1
+    - name: "random_noise"
+      strength: 1.0
+      probability: 0.1
+    - name: "free_riding"
+      probability: 0.05
+
+# Commitment scheme
+commitment:
+  type: "pedersen"
+  group_order: 57896044618658097711785492504343953926634992332820282019728792003956564819949
+  generator_g: 2
+  generator_h: 3
+
+# Trusted setup
+trusted_setup:
+  use_mpc: true
+  num_participants: 100
+  setup_file: "config/setup_params.json"
